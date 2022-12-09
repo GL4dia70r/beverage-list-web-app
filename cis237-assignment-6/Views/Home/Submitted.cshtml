@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Contact Submitted";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div style="text-align:center;">
+	<h1>Thank you!</h1>
+	<strong><p>
+		Your submission has been received.<br />
+		We will email you shortly.
+	</p></strong>
+	<span id="timer"></span></div>
+
+<script type="text/javascript">
+	var count = 5;
+	var redirect = "https://localhost:44333/Home/";
+	function countDown(){
+	var timer = document.getElementById("timer");
+	if(count > 0){
+		count--;
+		timer.innerHTML = "This page will redirect in "+count+" seconds.";
+		setTimeout("countDown()", 1000);
+	}else{
+		window.location.href = redirect;
+	}
+	}
+	countDown();
+</script>

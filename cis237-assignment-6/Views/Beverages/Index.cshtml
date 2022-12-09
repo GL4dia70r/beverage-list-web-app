@@ -1,0 +1,95 @@
+﻿@*
+David Allen
+12/09/22
+Assignment 6
+*@
+
+@model IEnumerable<cis237_assignment_6.Models.Beverage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="form-group">
+    <fieldset>
+        <legend>Search Filter</legend>
+        @*
+            With a POST request, open a form that will go to the filter method on the Beverage Controller.
+        *@
+        @using (
+            Html.BeginForm(
+                "Filter",
+                "Beverages",
+                FormMethod.Post
+            )
+        )
+        {
+            @*
+                Renderout the AntiForgery Token
+            *@
+            @Html.AntiForgeryToken()
+
+            <label for="name">Name</label>
+            @Html.TextBox("name", ViewData["filterName"])
+            <label for="pack">Pack</label>
+            @Html.TextBox("pack", ViewData["filterPack"])
+            <label for="minprice">Min (Price)</label>
+            @Html.TextBox("minPrice", ViewData["filterMinPrice"])
+            <label for="maxprice">Max (Price)</label>
+            @Html.TextBox("maxPrice", ViewData["filterMaxPrice"])
+
+            <input type="submit"
+                   value="Filter"
+                   name="Filter"
+                   class="btn btn-info pull-right" />
+        }
+    </fieldset>
+</div>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Name", "Sort", new { sortOrder = ViewBag.NameSortParm })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pack)
+            </th>
+            <th>
+                @Html.ActionLink("Price", "Sort", new { sortOrder = ViewBag.PriceSortParm })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
