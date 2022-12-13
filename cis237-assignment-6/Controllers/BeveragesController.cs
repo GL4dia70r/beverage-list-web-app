@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using cis237_assignment_6.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 
 namespace cis237_assignment_6.Controllers
 {
@@ -21,30 +22,6 @@ namespace cis237_assignment_6.Controllers
             _context = context;
         }
 
-        public IActionResult Sort(string sortOrder)
-        {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
-            var beverages = from b in _context.Beverages
-                           select b;
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    beverages = beverages.OrderByDescending(b => b.Name);
-                    break;
-                case "Price":
-                    beverages = beverages.OrderBy(b => b.Price);
-                    break;
-                case "price_desc":
-                    beverages = beverages.OrderByDescending(b => b.Price);
-                    break;
-                default:
-                    beverages = beverages.OrderBy(b => b.Name);
-                    break;
-            }
-            return View(beverages.ToList());
-        }
-
         // GET: Beverages
         public async Task<IActionResult> Index()
         {
@@ -54,6 +31,9 @@ namespace cis237_assignment_6.Controllers
             string filterPack = "";
             string filterMinPrice = "";
             string filterMaxPrice = "";
+
+            // sortOrder variable for the sort method.
+            //string sortOrder = "";
 
             int min = 0;
             int max = 100;
@@ -71,17 +51,17 @@ namespace cis237_assignment_6.Controllers
                 filterPack = HttpContext.Session.GetString("session_pack");
             }
             if (!String.IsNullOrEmpty(
-                HttpContext.Session.GetString("session_minPrice")
+                HttpContext.Session.GetString("session_minprice")
             ))
             {
-                filterMinPrice = HttpContext.Session.GetString("session_minPrice");
+                filterMinPrice = HttpContext.Session.GetString("session_minprice");
                 min = Int32.Parse(filterMinPrice);
             }
             if (!String.IsNullOrEmpty(
-                HttpContext.Session.GetString("session_maxPrice")
+                HttpContext.Session.GetString("session_maxprice")
             ))
             {
-                filterMaxPrice = HttpContext.Session.GetString("session_maxPrice");
+                filterMaxPrice = HttpContext.Session.GetString("session_maxprice");
                 max = Int32.Parse(filterMaxPrice);
             }
 
@@ -96,8 +76,34 @@ namespace cis237_assignment_6.Controllers
             ViewData["filterMinPrice"] = filterMinPrice;
             ViewData["filterMaxPrice"] = filterMaxPrice;
 
-            return View(finalFiltered);
+            // Sort code will be implementing later after semester for good practice.
+            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewData["PriceSortParm"] = sortOrder == "Price" ? "desc_price" : "Price";
+            //var beverages = from b in _context.Beverages
+            //                select b;
 
+            //switch (sortOrder)
+            //{
+            //    case "name_desc":
+            //        beverages = _context.Beverages.OrderByDescending(s => s.Name);
+            //        break;
+            //    case "Price":
+            //        beverages = _context.Beverages.OrderBy(s => s.Price >= min);
+            //        break;
+            //    case "price_desc":
+            //        beverages = _context.Beverages.OrderByDescending(s => s.Price <= max);
+            //        break;
+            //    default:
+            //        beverages = _context.Beverages.OrderBy(s => s.Name);
+            //        break;
+            //}
+            //if (!String.IsNullOrEmpty(sortOrder))
+            //{
+            //    return View(await beverages.AsNoTracking().ToListAsync());
+            //}
+
+            return View(finalFiltered);
+            
             // original return
             //return View(await _context.Beverages.ToListAsync());
         }
@@ -243,6 +249,21 @@ namespace cis237_assignment_6.Controllers
             HttpContext.Session.SetString("session_pack", pack);
             HttpContext.Session.SetString("session_minprice", minPrice);
             HttpContext.Session.SetString("session_maxprice", maxPrice);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Sort()
+        {
+            string Name = HttpContext.Request.Form["sortname"];
+            string MinPrice = HttpContext.Request.Form["sortminprice"];
+            string MaxPrice = HttpContext.Request.Form["sortmaxprice"];
+
+            HttpContext.Session.SetString("session_sortname", Name);
+            HttpContext.Session.SetString("session_sortminprice", MinPrice);
+            HttpContext.Session.SetString("session_sortmaxprice", MaxPrice);
 
             return RedirectToAction(nameof(Index));
         }

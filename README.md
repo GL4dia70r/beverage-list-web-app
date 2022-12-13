@@ -146,8 +146,8 @@ The following Bootstrap documentation should help you figure out how to add some
 
 ## Outside Resources Used
 
-None.
+https://www.boathousevineyards.com/privacy-policy/ - privacy policy was used as a template.
 
 ## Known Problems, Issues, And/Or Errors in the Program
 
-None yet.
+None, but trying to implement the sort method might be simple yet I didn't have enough time to implement it due to other studies.

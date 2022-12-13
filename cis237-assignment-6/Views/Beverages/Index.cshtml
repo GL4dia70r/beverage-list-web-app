@@ -55,13 +55,13 @@ Assignment 6
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("Name", "Sort", new { sortOrder = ViewBag.NameSortParm })
+                @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">*@@Html.DisplayNameFor(model => model.Name)@*</a>*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pack)
             </th>
             <th>
-                @Html.ActionLink("Price", "Sort", new { sortOrder = ViewBag.PriceSortParm })
+               @*<a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">*@@Html.DisplayNameFor(model => model.Price)@*</a>*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Active)
