@@ -1,4 +1,7 @@
-﻿using System;
+﻿// David Allen
+// 12/15/22
+// Assignment 6
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

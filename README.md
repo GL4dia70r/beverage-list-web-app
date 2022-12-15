@@ -148,6 +148,8 @@ The following Bootstrap documentation should help you figure out how to add some
 
 https://www.boathousevineyards.com/privacy-policy/ - privacy policy was used as a template.
 
+Used some code from my CIS170 class back from 2019 as reference to write HTML code.
+
 ## Known Problems, Issues, And/Or Errors in the Program
 
 None, but trying to implement the sort method might be simple yet I didn't have enough time to implement it due to other studies.

@@ -1,4 +1,7 @@
-﻿using cis237_assignment_6.Models;
+﻿// David Allen
+// 12/15/22
+// Assignment 6
+using cis237_assignment_6.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
