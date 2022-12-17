@@ -58,19 +58,20 @@ namespace cis237_assignment_6.Controllers
             ))
             {
                 filterMinPrice = HttpContext.Session.GetString("session_minprice");
-                min = Int32.Parse(filterMinPrice);
+                min = (Int32)decimal.Parse(filterMinPrice);
             }
             if (!String.IsNullOrEmpty(
                 HttpContext.Session.GetString("session_maxprice")
             ))
             {
                 filterMaxPrice = HttpContext.Session.GetString("session_maxprice");
-                max = Int32.Parse(filterMaxPrice);
+                max = (Int32)decimal.Parse(filterMaxPrice);
             }
 
             IList<Beverage> finalFiltered = await beveragesToFilter.Where(
                 beverage => beverage.Price >= min && 
                 beverage.Price <= max &&
+                beverage.Pack.Contains(filterPack) &&
                 beverage.Name.Contains(filterName)
                 ).ToListAsync();
 
