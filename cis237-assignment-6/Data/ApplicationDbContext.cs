@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using cis237_assignment_6.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace cis237_assignment_6.Data
             : base(options)
         {
         }
+
+        public virtual DbSet<Beverage> Beverages { get; set; }
     }
 }

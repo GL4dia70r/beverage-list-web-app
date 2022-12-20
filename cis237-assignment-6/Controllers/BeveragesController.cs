@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cis237_assignment_6.Models;
+using cis237_assignment_6.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
@@ -18,9 +19,9 @@ namespace cis237_assignment_6.Controllers
     [Authorize]
     public class BeveragesController : Controller
     {
-        private readonly BeverageContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public BeveragesController(BeverageContext context)
+        public BeveragesController(ApplicationDbContext context)
         {
             _context = context;
         }
